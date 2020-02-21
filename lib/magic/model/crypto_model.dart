@@ -1,5 +1,5 @@
-
-class Crypto {
+import 'package:equatable/equatable.dart';
+class Crypto extends Equatable{
     final String id;
     final String name;
     final String symbol;
@@ -33,6 +33,9 @@ class Crypto {
         this.percentChange7D,
         this.lastUpdated,
     });
+
+    @override 
+    List<Object> get props => [name,symbol,priceUsd,percentChange1H];
 
     factory Crypto.fromJson(Map<String, dynamic> json) => Crypto(
         id: json["id"] == null ? null : json["id"],

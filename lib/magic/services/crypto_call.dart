@@ -14,8 +14,8 @@ class CryptoCall{
         // This is where I select what to pass to the UI 
         return Crypto(
           name: crypt['name'],
-          priceUsd: crypt['priceUsd'],
-          percentChange1H: crypt['percentChange1H'],
+          priceUsd: crypt['price_usd'],
+          percentChange1H: crypt['percent_change_1h'],
           symbol: crypt['symbol']
         );
       }).toList();

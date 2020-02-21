@@ -65,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
           return ListView.builder(
             itemCount: state.crypto.length,
             itemBuilder:(BuildContext context,int index){
-              return Last();
+              return Last(crypto: state.crypto[index],);
             });
         }
         return null;
@@ -80,10 +80,10 @@ class Last extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Text(crypto.name.toString()),
-      title: Text(crypto.symbol.toString()),
+      leading: Text(crypto.symbol.toString()),
+      title: Text(crypto.name.toString()),
       subtitle: Text(crypto.priceUsd.toString()),
-      trailing: Text(crypto.percentChange1H.toString()),
+      trailing: Text('${crypto.percentChange1H.toString()}%'),
     );
   }
 }
