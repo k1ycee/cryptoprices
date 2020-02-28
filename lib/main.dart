@@ -1,44 +1,46 @@
-import 'package:crypto_prices/magic/bloc/crypto_bloc.dart';
 import 'package:crypto_prices/magic/model/crypto_model.dart';
-import 'package:crypto_prices/magic/services/crypto_repo.dart';
+import 'package:crypto_prices/magic/services/crypt_memory.dart';
+// import 'package:crypto_prices/magic/services/crypto_repo.dart';
+import 'package:crypto_prices/magic/services/crypto_call.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 
 
-CryptRepo cryptRepo = CryptRepo();
+// CryptRepo cryptRepo = CryptRepo();
+
 
 void main(){
-  runApp(MyApp(cryptRepo:cryptRepo));
+  runApp(MyHomePage());
 }
 
-class MyApp extends StatelessWidget {
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       title: 'Flutter Demo',
+//       // theme: ThemeData.dark(),
+//       home: Scaffold(
+//         appBar: AppBar(
+//           backgroundColor: Colors.blueAccent,
+//           title: Text('Crypto Exchange'),
+//           centerTitle: true,
+//           elevation: 0.4,
+//           actions: <Widget>[
+//             IconButton(icon: Icon(Icons.refresh),onPressed: _apiGet,)
+//           ],
+//           ),
+
+//         body:MyHomePage(),
+//       ),
+//     );
+
+//   }
+
   
-  final CryptRepo cryptRepo;
-  
-  MyApp({this.cryptRepo});
-  
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData.dark(),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('CryptoExchange'),
-          centerTitle: true,
-          elevation: 0,
-          ),
-        body: BlocProvider(
-          create: (context) => CryptoBloc(cryptRepo: cryptRepo)..add(FetchCrypto()),
-          child: MyHomePage(),
-      ),
-      ),
-    );
-  }
-}
+//   }
+
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -46,44 +48,65 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  static CryptMemory memory;
+  bool isLoading = false;
 
   @override
+  void initState() {
+    super.initState();
+    CryptMemory.cryptMemory.fetchMemCrypto();
+  }
+  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CryptoBloc,CryptoState>(
-      builder: (context,state){
-        if (state is CryptoInitial){
-          return Center(
-            child: SpinKitPouringHourglass(color: Colors.blueGrey, size: 70),
-          );
-        }
-        if (state is CryptoError){
-          return Center(
-            child: Text("Couldn't fetch any data at this point in time :("),
-          );
-        }
-        if (state is CryptoLoaded){
-          return ListView.builder(
-            itemCount: state.crypto.length,
-            itemBuilder:(BuildContext context,int index){
-              return Last(crypto: state.crypto[index],);
-            });
-        }
-        return null;
-      },
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+          home: Scaffold(
+            appBar: AppBar(
+              title: Text('Crypto Exchange',),
+              centerTitle: true,
+              elevation: 0,
+              actions: <Widget>[
+                IconButton(icon: Icon(Icons.refresh),onPressed: ()async{ _apiget();},)
+              ],
+              ),
+              body: isLoading ? Center(child: SpinKitChasingDots(color: Colors.blue,size: 40,),) : _naEmbethis()
+              )
     );
   }
-}
 
-class Last extends StatelessWidget {
-  final Crypto crypto;
-  Last({this.crypto});
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: Text(crypto.symbol.toString()),
-      title: Text(crypto.name.toString()),
-      subtitle: Text(crypto.priceUsd.toString()),
-      trailing: Text('${crypto.percentChange1H.toString()}%'),
-    );
+  _naEmbethis(){
+    return FutureBuilder (
+        future: CryptMemory.cryptMemory.fetchMemCrypto(),
+        builder: (BuildContext context,AsyncSnapshot<List<Crypto>> snapshot){
+            if(!snapshot.hasData){
+              return Center(child: SpinKitDualRing(color: Colors.blue,size: 70,),);
+            }else{
+              ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (BuildContext context,int index){
+                    return ListTile(
+                      leading: Text(snapshot.data[index].symbol.toString()),
+                      title: Text(snapshot.data[index].name.toString()),
+                      subtitle: Text('\$ ${snapshot.data[index].priceUsd}'),
+                      trailing: Text('${snapshot.data[index].percentChange1H} %'),
+                    );
+                }
+              );
+            }
+            return null;
+        });
+  }
+  _apiget() async{
+    setState(() {
+      isLoading = true;
+    });
+    var apiProvider = CryptoCall();
+    apiProvider.fetchCrypto();
+    
+    await Future.delayed(Duration (seconds: 1));
+
+    setState(() {
+      isLoading = false;
+    });
   }
 }
