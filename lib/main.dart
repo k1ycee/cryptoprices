@@ -66,9 +66,10 @@ class _MyHomePageState extends State<MyHomePage> {
       debugShowCheckedModeBanner: false,
           home: Scaffold(
             appBar: AppBar(
-              title: Text('Crypto Exchange',),  
+              title: Text('Crypto Exchange',style: TextStyle(color: Colors.white),),  
               centerTitle: true,
               elevation: 0,
+              backgroundColor: Colors.black,
               // actions: <Widget>[
               //   IconButton(icon: Icon(Icons.refresh),onPressed: ()async{ _apiget();},)
               // ],
@@ -78,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     future: CryptMemory.cryptMemory.fetchMemCrypto(),
                     builder: (BuildContext context,AsyncSnapshot<List<Crypto>> snapshot){
                         if(!snapshot.hasData){
-                          return Center(child: SpinKitDualRing(color: Colors.blue,size: 70,),);
+                          return Center(child: SpinKitDualRing(color: Colors.black,size: 70,),);
                         }else{
                           return ListView.builder(
                             itemCount: snapshot.data.length,
