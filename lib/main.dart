@@ -70,9 +70,9 @@ class _MyHomePageState extends State<MyHomePage> {
               centerTitle: true,
               elevation: 0,
               backgroundColor: Colors.black,
-              // actions: <Widget>[
-              //   IconButton(icon: Icon(Icons.refresh),onPressed: ()async{ _apiget();},)
-              // ],
+              actions: <Widget>[
+                IconButton(icon: Icon(Icons.refresh),onPressed: ()async{ _apiget();},)
+              ],
               ),
               body: Container(
                 child: FutureBuilder(
@@ -121,17 +121,17 @@ class _MyHomePageState extends State<MyHomePage> {
   //           return null;
   //       });
   // }
-  // _apiget() async{
-  //   setState(() {
-  //     isLoading = true;
-  //   });
-  //   var apiProvider = CryptoCall();
-  //   apiProvider.fetchCrypto();
+  _apiget() async{
+    setState(() {
+      isLoading = true;
+    });
+    var apiProvider = CryptoCall();
+    apiProvider.fetchCrypto();
     
-  //   await Future.delayed(Duration (seconds: 1));
+    await Future.delayed(Duration (seconds: 1));
 
-  //   setState(() {
-  //     isLoading = false;
-  //   });
-  // }
+    setState(() {
+      isLoading = false;
+    });
+  }
 }
