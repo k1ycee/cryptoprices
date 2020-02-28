@@ -69,9 +69,9 @@ class _MyHomePageState extends State<MyHomePage> {
               title: Text('Crypto Exchange',),  
               centerTitle: true,
               elevation: 0,
-              actions: <Widget>[
-                IconButton(icon: Icon(Icons.refresh),onPressed: ()async{ _apiget();},)
-              ],
+              // actions: <Widget>[
+              //   IconButton(icon: Icon(Icons.refresh),onPressed: ()async{ _apiget();},)
+              // ],
               ),
               body: Container(
                 child: FutureBuilder(
@@ -84,16 +84,14 @@ class _MyHomePageState extends State<MyHomePage> {
                             itemCount: snapshot.data.length,
                             itemBuilder: (BuildContext context,int index){
                                 return ListTile(
-                                  leading: Text(snapshot.data[index].symbol.toString(),maxLines: 1,),
-                                  title: Text(snapshot.data[index].name.toString()),
-                                  subtitle: Text('\$ ${snapshot.data[index].priceUsd}'),
-                                  trailing: Text('${snapshot.data[index].percentChange1H} %'),
-                                  dense: true,
+                                  leading: Text(snapshot.data[index].symbol.toString(),maxLines: 1,style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),),
+                                  title: Text(snapshot.data[index].name.toString(),style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
+                                  subtitle: Text('\$ ${snapshot.data[index].priceUsd}',style: TextStyle(fontSize: 19),),
+                                  trailing: Text('${snapshot.data[index].percentChange1H} %', style: TextStyle(fontSize: 16),),
                                 );
                             }
                           );
                         }
-                        return Center(child: SpinKitDualRing(color: Colors.blue,size: 70,),);
                     })
                   ),
                 )
@@ -122,17 +120,17 @@ class _MyHomePageState extends State<MyHomePage> {
   //           return null;
   //       });
   // }
-  _apiget() async{
-    setState(() {
-      isLoading = true;
-    });
-    var apiProvider = CryptoCall();
-    apiProvider.fetchCrypto();
+  // _apiget() async{
+  //   setState(() {
+  //     isLoading = true;
+  //   });
+  //   var apiProvider = CryptoCall();
+  //   apiProvider.fetchCrypto();
     
-    await Future.delayed(Duration (seconds: 1));
+  //   await Future.delayed(Duration (seconds: 1));
 
-    setState(() {
-      isLoading = false;
-    });
-  }
+  //   setState(() {
+  //     isLoading = false;
+  //   });
+  // }
 }
