@@ -3,11 +3,9 @@
 import 'package:crypto_prices/magic/model/crypto_model.dart';
 import 'package:crypto_prices/magic/services/crypt_memory.dart';
 import 'package:dio/dio.dart';
-import 'package:http/http.dart' as http;
+
 
 class CryptoCall{
-
- static CryptoCall call;
   // declaring the api url as a global string so it can be used anywhere in the class making it a bit drier
   
   String url = 'https://api.coinmarketcap.com/v1/ticker/?limit=50';
@@ -15,7 +13,7 @@ class CryptoCall{
 // This function makes the Api call and within it I then selected the data i want to parse to the UI
 
   Future <List<Crypto>> fetchCrypto()async{
-    final call = await Dio().get(url);
+    Response call = await Dio().get(url);
 
     // if (call.statusCode == 200){
     //   var data = call.body.toString();

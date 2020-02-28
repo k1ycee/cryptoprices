@@ -14,7 +14,7 @@ class Crypto {
     String rank;
     String priceUsd;
     String priceBtc;
-    String the24HVolumeUsd;
+    // String the24HVolumeUsd;
     String marketCapUsd;
     String availableSupply;
     String totalSupply;
@@ -31,7 +31,7 @@ class Crypto {
         this.rank,
         this.priceUsd,
         this.priceBtc,
-        this.the24HVolumeUsd,
+        // this.the24HVolumeUsd,
         this.marketCapUsd,
         this.availableSupply,
         this.totalSupply,
@@ -49,7 +49,7 @@ class Crypto {
         rank: json["rank"],
         priceUsd: json["price_usd"],
         priceBtc: json["price_btc"],
-        the24HVolumeUsd: json["24h_volume_usd"],
+        // the24HVolumeUsd: json["24h_volume_usd"],
         marketCapUsd: json["market_cap_usd"],
         availableSupply: json["available_supply"],
         totalSupply: json["total_supply"],
@@ -67,7 +67,7 @@ class Crypto {
         "rank": rank,
         "price_usd": priceUsd,
         "price_btc": priceBtc,
-        "24h_volume_usd": the24HVolumeUsd,
+        // "24h_volume_usd": the24HVolumeUsd,
         "market_cap_usd": marketCapUsd,
         "available_supply": availableSupply,
         "total_supply": totalSupply,

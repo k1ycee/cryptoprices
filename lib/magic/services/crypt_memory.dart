@@ -51,23 +51,22 @@ class CryptMemory{
     return await openDatabase(path, version: 1, onOpen: (cryptMemory){},
        onCreate: (Database cr, int version) async{
          await cr.execute(
-           'CREATE TABLE Crypto('
+           "CREATE TABLE Crypto("
            'id TEXT,'
            'name TEXT,'
            'price_usd TEXT,'
            'percent_change_1h TEXT,'
-           'symbol TEXT'
-           'price_btc TEXT'
-           'rank TEXT'
-           '24h_volume_usd TEXT'
-           'market_cap_usd TEXT'
-           'available_supply TEXT'
-           'total_supply TEXT'
-           'max_supply TEXT'
-           'percent_change_24h TEXT'
-           'percent_change_7d TEXT'
+           'symbol TEXT,'
+           'price_btc TEXT,'
+           'rank TEXT,'
+           'market_cap_usd TEXT,'
+           'available_supply TEXT,'
+           'total_supply TEXT,'
+           'max_supply TEXT,'
+           'percent_change_24h TEXT,'
+           'percent_change_7d TEXT,'
            'last_updated TEXT'
-        ')');
+        ")");
       });
    }
 
